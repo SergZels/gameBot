@@ -1,0 +1,7 @@
+conf.py
+debug.txt
+docker-compose.yml
+dockerfile
+test2.py
+.idea
+venv
