@@ -37,20 +37,20 @@ class FSMdig(StatesGroup):
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
-    await message.answer("Вітаю! Обери ігру ⬇️", reply_markup=keyb_main)
+    await message.answer("Congratulations! Choose a game ⬇️", reply_markup=keyb_main)
 
-@dp.message_handler(filters.Text(startswith="Камінь🪨 ножиці✂️ бумага📜"))
+@dp.message_handler(filters.Text(startswith="Stone🪨 scissors✂️ paper📜"))
 async def foots(message: types.Message):
-    await message.answer("Вибери: ", reply_markup=keyb_st)
+    await message.answer("Choose:", reply_markup=keyb_st)
 
-@dp.message_handler(filters.Text(startswith="Вгадай число"), state=None)
+@dp.message_handler(filters.Text(startswith="Guess the number"), state=None)
 async def foots(message: types.Message):
     global x, count
     x = random.randrange(100)
     count = 0
     await FSMdig.dig.set()
     print("Input digit from 0 to 100")
-    await message.answer("Я загадав число X від 1 до 100, спробуй його вгадати.\nВведи число:")
+    await message.answer("I guessed the number X from 1 to 100, try to guess it.\nEnter the number:")
 
 
 @dp.message_handler(content_types=[types.ContentType.TEXT], state=FSMdig.dig)
@@ -61,13 +61,13 @@ async def foots(message: types.Message, state: FSMdig):
         num = int(num)
         count += 1
         if num > x:
-            print("Lover")
-            await message.answer("Число Х менше ⬇️")
+
+            await message.answer("Number X is less ⬇️")
         if num < x:
-            print("Hier")
-            await message.answer("Число Х більше ⬆️")
+
+            await message.answer("The number X is greater than ⬆️")
         if num == x:
-            print(f"You win! in {count} count")
+
             await message.answer(f"You win!🥇🏆 in {count} count", reply_markup=keyb_main)
             count = 0
             await state.finish()
@@ -76,7 +76,7 @@ async def foots(message: types.Message, state: FSMdig):
 
 @dp.message_handler()
 async def foots(message: types.Message, state: FSMdig):
-    await message.answer("Обери ігру ⬇️", reply_markup=keyb_main)
+    await message.answer("Choose a game ⬇️", reply_markup=keyb_main)
 
 @dp.callback_query_handler()
 async def change_image_callback(query: types.CallbackQuery):
@@ -85,29 +85,29 @@ async def change_image_callback(query: types.CallbackQuery):
     bot_ch = random.choice(("stone", "paper", "cross"))
     usr_ch = query.data
     if bot_ch == usr_ch :
-        await bot.send_message(chat_id=query.message.chat.id,text = f"Я - {bot_ch} ти - {usr_ch} Нічия! Спробуй ще раз")
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Вибери: ", reply_markup=keyb_st)
+        await bot.send_message(chat_id=query.message.chat.id,text = f"I am {bot_ch} you are {usr_ch} Draw! Try again!")
+        await bot.send_message(chat_id=query.message.chat.id, text=f"Choose: ", reply_markup=keyb_st)
 
     if bot_ch == 'stone' and usr_ch == 'paper':
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Я - 🪨 ти - 📜 ти переміг!🏆")
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Вибери: ", reply_markup=keyb_st)
+        await bot.send_message(chat_id=query.message.chat.id, text=f"I - 🪨 you - 📜 you won!🏆")
+        await bot.send_message(chat_id=query.message.chat.id, text=f"Choose: ", reply_markup=keyb_st)
     if bot_ch == 'stone' and usr_ch == 'cross':
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Я - 🪨 ти - ✂️ ти програв!")
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Вибери: ", reply_markup=keyb_st)
+        await bot.send_message(chat_id=query.message.chat.id, text=f"I - 🪨 you - ✂️ you lost!")
+        await bot.send_message(chat_id=query.message.chat.id, text=f"Choose: ", reply_markup=keyb_st)
 
     if bot_ch == 'paper' and usr_ch == 'cross':
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Я - 📜 ти - ✂️ ти переміг!🏆")
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Вибери: ", reply_markup=keyb_st)
+        await bot.send_message(chat_id=query.message.chat.id, text=f"I - 📜 you - ✂️ you won!🏆")
+        await bot.send_message(chat_id=query.message.chat.id, text=f"Choose: ", reply_markup=keyb_st)
     if bot_ch == 'paper' and usr_ch == 'stone':
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Я - 📜 ти - 🪨 ти програв!")
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Вибери: ", reply_markup=keyb_st)
+        await bot.send_message(chat_id=query.message.chat.id, text=f"I - 📜 you - 🪨 you lost!")
+        await bot.send_message(chat_id=query.message.chat.id, text=f"Choose: ", reply_markup=keyb_st)
 
     if bot_ch == 'cross' and usr_ch == 'paper':
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Я - ✂️ ти - 📜 ти програв!")
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Вибери: ", reply_markup=keyb_st)
+        await bot.send_message(chat_id=query.message.chat.id, text=f"I - ✂️ you - 📜 you lost!")
+        await bot.send_message(chat_id=query.message.chat.id, text=f"Choose: ", reply_markup=keyb_st)
     if bot_ch == 'cross' and usr_ch == 'stone':
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Я - ✂️ ти - 🪨 ти переміг!🏆")
-        await bot.send_message(chat_id=query.message.chat.id, text=f"Вибери: ", reply_markup=keyb_st)
+        await bot.send_message(chat_id=query.message.chat.id, text=f"I - ✂️ you - 🪨 you won!🏆")
+        await bot.send_message(chat_id=query.message.chat.id, text=f"Choose: ", reply_markup=keyb_st)
 
 
 
