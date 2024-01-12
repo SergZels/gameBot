@@ -17,7 +17,7 @@ ADMIN_ID = conf.ADMIN_ID
 bot = Bot(token=API_Token)
 logger.add("debug.txt")
 # webhook settings
-WEBHOOK_HOST = 'https://vmi957205.contaboserver.net'
+WEBHOOK_HOST = 'https://zelse.asuscomm.com/'
 WEBHOOK_PATH = '/prod_game'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
